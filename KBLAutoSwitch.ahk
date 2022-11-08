@@ -1,5 +1,5 @@
 ﻿/*tong(【自动切换输入法】)
-	版本: v2.4.1
+	版本: v2.4.2
 	脚本: KBLAutoSwitch自动切换输入法
 	作者: tong
 */
@@ -27,8 +27,7 @@ Label_DefVar: ; 初始化变量
 	global StartTick:=A_TickCount ; 启动开始时间
 	global ScriptIniting := 1 ; 脚本初始化中
 	global APPName := "KBLAutoSwitch"
-	global APPVersion := "2.4.0"
-	global APPVersion := "2.4.1"
+	global APPVersion := "2.4.2"
 	global INI := A_ScriptDir "\KBLAutoSwitch.ini" ; 配置文件
 	global AutoSwitchFrequency := 0 ; 自动切换次数统计
 	global APPType := RegExMatch(APPVersion, "\d*\.\d*\.\d*\.\d*")?"（测试版）":"",APPVersion := APPVersion APPType
@@ -1557,7 +1556,7 @@ Menu_About: ; 关于页面Gui
 	Menu, Tray, Icon, %A_AhkPath%
 	Gui, 99:Destroy
 	Gui, 99:Color, FFFFFF
-	Gui, 99:Add, ActiveX, x0 y0 w700 h570 voWB, shell explorer
+	Gui, 99:Add, ActiveX, x0 y0 w700 h600 voWB, shell explorer
 	oWB.Navigate("about:blank")
 	vHtml = 
 	(
@@ -1565,8 +1564,18 @@ Menu_About: ; 关于页面Gui
 			<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<title>APPName</title>
 			<body style="font-family:Microsoft YaHei">
-				<h2 align="center">【%APPName%】</h2>
-				<h3 align="center">自动切换输入法 v%APPVersion%</h3>
+				<h2 align="center">
+					【%APPName%】
+					<br>
+					自动切换中英文输入法
+					<br>
+					<img alt="Windows" style="vertical-align:middle" src="https://raster.shields.io/badge/Windows-0078D6?logo=windows&logoColor=white"/>
+					<img alt="最新版本" style="vertical-align:middle" src="https://raster.shields.io/badge/最新版本-%最新版本%-blue.svg?logo=github"/>
+					<img alt="stars" style="vertical-align:middle" src="https://raster.shields.io/github/stars/flyinclouds/KBLAutoSwitch.svg?label=stars&logo=github"/>
+					<img alt="forks" style="vertical-align:middle" src="https://raster.shields.io/github/forks/flyinclouds/KBLAutoSwitch.svg?label=forks&logo=github"/>
+					<img alt="Autohotkey" style="vertical-align:middle" src="https://raster.shields.io/badge/autohotkey-1.1.33.10-blue.svg?&logo=autohotkey"/>
+				</h2>
+				<b>当前版本：v%APPVersion%</b><br>
 				<b>最新版本：%最新版本%</b>
 				<h4>软件特色</h4>
 				<ol>
@@ -2168,9 +2177,9 @@ Menu_AdvancedConfigEdit_Gui: ; 编辑配置Gui
 		Gui,ConfigEdit:Add, Text, Center xm yp+50 w%Text_w%, %Showvar2%
 		Gui,ConfigEdit:Add, DropDownList, HwndAdvanced_Config_Edit_Hwnd0 x+5 yp-2 w120, %ListViewKBLState%
 		GuiControl, Choose, %Advanced_Config_Edit_Hwnd0%, % TransformStateReverse(ListViewKBLState,ACvar3)+1
-		Gui,ConfigEdit:Add, Text, Center xm yp+35 w%Text_w%,%Showvar3%
-		Gui,ConfigEdit:Add, Edit, HwndAdvanced_Config_Edit_Hwnd1 x+5 yp-2 w350 r2, %ACvar4%
-		Gui,ConfigEdit:Add, Text, Center xm yp+50 w%Text_w%,说明
+		Gui,ConfigEdit:Add, Text, Center xm yp+33 w%Text_w%,%Showvar3%
+		Gui,ConfigEdit:Add, Edit, HwndAdvanced_Config_Edit_Hwnd1 x+5 yp-2 w350 r5, %ACvar4%
+		Gui,ConfigEdit:Add, Text, Center xm yp+101 w%Text_w%,说明
 		Gui,ConfigEdit:Add, Edit, HwndAdvanced_Config_Edit_Hwnd2 x+5 yp-2 w350 r4 -WantReturn, %ACvar5%
 	}Else If (ConfigEdit_Flag=2){
 		Gui,ConfigEdit:Add, Text, Center xm yp+30 w%Text_w%, %Showvar1%
@@ -2184,8 +2193,8 @@ Menu_AdvancedConfigEdit_Gui: ; 编辑配置Gui
 		Gui, ConfigEdit:Add, Button, %tempVar1% w50 h25 xm+300 yp ggOperation_Flag_HotString, 热字串
 		Gui, ConfigEdit:Add, Button, %tempVar2% w50 h25 xm+360 yp ggOperation_Flag_HotKey, 热键
 		Gui,ConfigEdit:Add, Text, HwndAdvanced_Config_Edit_Text0 Center xm yp+35 w%Text_w%,%Showvar2%
-		Gui,ConfigEdit:Add, Edit, HwndAdvanced_Config_Edit_Hwnd0 x+5 yp-2 w350 r2, %ACvar3%
-		Gui,ConfigEdit:Add, Text, Center xm yp+50 w%Text_w%,%Showvar3%
+		Gui,ConfigEdit:Add, Edit, HwndAdvanced_Config_Edit_Hwnd0 x+5 yp-2 w350 r3, %ACvar3%
+		Gui,ConfigEdit:Add, Text, Center xm yp+69 w%Text_w%,%Showvar3%
 		Gui,ConfigEdit:Add, DropDownList, HwndAdvanced_Config_Edit_Hwnd1 x+5 yp-2 w120, %OperationState%
 		GuiControl, Choose, %Advanced_Config_Edit_Hwnd1%, % TransformStateReverse(OperationState,ACvar4)+1
 		Gui,ConfigEdit:Add, Text, Center xm yp+35 w%Text_w%,说明
@@ -2199,9 +2208,9 @@ Menu_AdvancedConfigEdit_Gui: ; 编辑配置Gui
 		GuiControl, Hide, %Advanced_Config_Edit_Hwnd%
 		GuiControl, Hide, %Advanced_Config_Edit_Hwnd0%
 		Gui,ConfigEdit:Add, Text, Center xm yp-46 w%Text_w%,%Showvar3%
-		Gui,ConfigEdit:Add, Edit, HwndAdvanced_Config_Edit_Hwnd1 x+5 yp-2 w350 r4, %ACvar4%
-		Gui,ConfigEdit:Add, Text, Center xm yp+90 w%Text_w%,说明
-		Gui,ConfigEdit:Add, Edit, HwndAdvanced_Config_Edit_Hwnd2 x+5 yp-2 w350 r4 -WantReturn +ReadOnly, %ACvar5%
+		Gui,ConfigEdit:Add, Edit, HwndAdvanced_Config_Edit_Hwnd1 x+5 yp-2 w350 r5, %ACvar4%
+		Gui,ConfigEdit:Add, Text, Center xm yp+105 w%Text_w%,说明
+		Gui,ConfigEdit:Add, Edit, HwndAdvanced_Config_Edit_Hwnd2 x+5 yp-2 w350 r5 -WantReturn +ReadOnly, %ACvar5%
 	}
 	Gui,ConfigEdit:Font
 	Gui,ConfigEdit:Add,Button,Default xm+140 y+25 w75 ggSetAdvancedConfig,保存(&S)
@@ -2251,6 +2260,9 @@ gSetAdvancedConfig: ; 保存高级配置
 	GuiControlGet, OutputVar0,, %Advanced_Config_Edit_Hwnd0%
 	GuiControlGet, OutputVar1,, %Advanced_Config_Edit_Hwnd1%
 	GuiControlGet, OutputVar2,, %Advanced_Config_Edit_Hwnd2%
+	OutputVar := StrReplace(OutputVar,"`n"),OutputVar0 := StrReplace(OutputVar0,"`n"),OutputVar2 := StrReplace(OutputVar2,"`n")
+	If !(ConfigEdit_Flag=3 && OutputVar="托盘提示内容")
+		OutputVar1 := StrReplace(OutputVar1,"`n")
 	If (substr(Showvar,1,2)="添加" && ConfigEdit_Flag=1 && !groupNumObj.HasKey(NewOrder) && groupNameObj.HasKey(OutputVar)){
 		FocusNum := LVFocusNum(2,OutputVar)
 	}Else If (OutputVar!=""){
@@ -2309,7 +2321,7 @@ LVFocusNum(col,val) { ; 获取焦点行
 
 Label_ahkGroupWin_Var: ; 窗口组对应变量
 	ConfigEdit_Flag := 1
-	ConfigEdit_h := 247
+	ConfigEdit_h := 295
 	Text_w := 50
 	Showvar := "窗口状态"
 	Showvar1 := "窗口组"
@@ -2321,7 +2333,7 @@ Return
 
 Label_CustomOperation_Var: ; 自定义操作对应变量
 	ConfigEdit_Flag := 2
-	ConfigEdit_h := 232
+	ConfigEdit_h := 250
 	Text_w := 60
 	Showvar := "高级操作"
 	Showvar1 := "窗口组"
@@ -2334,7 +2346,7 @@ Return
 
 Label_AdvancedConfig_Var: ; 高级配置对应变量
 	ConfigEdit_Flag := 3
-	ConfigEdit_h := 202
+	ConfigEdit_h := 237
 	Text_w := 50
 	Showvar := ACvar2
 	Showvar1 := ""
@@ -2500,6 +2512,16 @@ Set_English: ; 当前窗口设为英文
 Return
 
 Toggle_CN_CNEN: ; 切换中英文(中文)
+	if WinActive("ahk_exe vcxsrv.exe") or WinActive("ahk_class X410_XAppWin") or WinActive("ahk_class Xming X rl") {
+		; 键盘上没有这个键，fcitx上配置的是这个切换输入法
+		; F13=KpEnter F14=Rctrl F15=Pause F16=Print F17=KpDivide F18=Ralt F19=<empty> F20=Lsuper F21=Rsuper F22=Menu F23=<empty> F24=KpEqual
+		SendInput, {F21}
+	; } else if WinActive("ahk_exe msrdc.exe ahk_class RAIL_WINDOW") {
+	; 	; wslg不接收 F21，因此换成一个组合键，最好上述的判断条件也判断下这个进程的cmdline来精确定位wslg
+	; 	SendInput, {RAlt down}
+	; 	Sleep 150
+	; 	SendInput, {RShift}{RAlt up}
+	} else {
 	If (TarHotFunFlag=0 && Outer_InputKey_Compatible=1 && A_ThisHotkey!="" && A_PriorKey!=RegExReplace(A_ThisHotkey, "iS)(~|\s|up|down)", ""))
 		Return
 	KBLState := (getIMEKBL(gl_Active_IMEwin_id)!=EN_Code?(getIMECode(gl_Active_IMEwin_id)!=0?0:1):2)
@@ -2508,6 +2530,7 @@ Toggle_CN_CNEN: ; 切换中英文(中文)
 		setKBLlLayout(1)
 	}Else If (KBLState=1 || KBLState=2)
 		setKBLlLayout(0)
+	}
 Return
 
 Toggle_CN_EN: ; 切换中英文输入法
